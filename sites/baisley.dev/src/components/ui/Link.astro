@@ -1,0 +1,55 @@
+---
+// interface Props {
+//   href: string;
+//   size?: "md" | "lg";
+//   block?: boolean;
+//   style?: "outline" | "primary" | "inverted" | "muted";
+//   class?: string;
+//   [x: string]: any;
+// }
+
+// const {
+//   href,
+//   block,
+//   size = "lg",
+//   style = "primary",
+//   class: className,
+//   ...rest
+// } = Astro.props;
+
+// const sizes = {
+//   lg: "px-5 py-2.5",
+//   md: "px-4 py-2",
+// };
+
+const styles = {
+  primary:   "text-black dark:text-white border-transparent",
+  secondary: "text-white dark:text-black border-transparent",
+  outline:   "text-black dark:text-white bg-transparent border-black dark:border-white",
+};
+
+interface Props {
+  href: string;
+  class?: string;
+  style?: "primary" | "secondary" | "outline";
+}
+
+const { 
+  href, 
+  class: className, 
+  style = "primary",
+  ...rest
+  } = Astro.props;
+---
+
+<a 
+  href={href} 
+  class:list={[
+    "border-2",
+    styles[style],
+    className,
+  ]}
+  {...rest}
+>
+  <slot />
+</a>

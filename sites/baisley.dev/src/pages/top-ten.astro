@@ -1,0 +1,102 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import Sectionhead from "../components/Sectionhead.astro";
+
+import { Image } from "astro:assets";
+import LSLogo from "../assets/images/late-show-logo.jpeg";
+
+const topTenList = [
+    {
+        entry: "Finally, a topic to break awkward tension with the mugger.",
+        author: "Mike A.",
+        location: "Marion, IA",
+    },
+    {
+        entry: "If player breaks his bat, can ask to borrow a fan's.",
+        author: "John A.",
+        location: "Brooklyn, NY",
+    },
+    {
+        entry: "TV viewers outside New York now free to watch CBS's exciting fall schedule.",
+        author: "Bob B.",
+        location: "West Chester, OH",
+    },
+    {
+        entry: "Easy to get tickets simply by removing them from dead subway patron's pockets.",
+        author: "Mike R.",
+        location: "Fredericton, NB, Canada",
+    },
+    {
+        entry: "West Nile Virus renamed World Series Fever.",
+        author: "Alex R.",
+        location: "Stamford, CT",
+    },
+    {
+        entry: "Many long, lingering shots of Don Zimmer on TV.",
+        author: "Steve V.",
+        location: "Portland, OR",
+    },
+    {
+        entry: "You can get mugged after all seven games instead of just three or four.",
+        author: "Brian O.",
+        location: "Rochester, NY",
+    },
+    {
+        entry: "Hookers in Times Square don't have to leave town.",
+        author: "Brett B.",
+        location: "Trout Brook, NB, Canada",
+    },
+    {
+        entry: "All this attention is finally putting New York on the map.",
+        author: "Rob D.",
+        location: "Cary, IL",
+    },
+    {
+        entry: "It's quite touching to hear 56,000 pickpockets, muggers and murderers sing 'Take Me Out To The Ball Game' on national TV.",
+        author: "Douglas Q.",
+        location: "Grayland, WA"
+    }
+];
+---
+
+<MainLayout title="Brett Baisley | Top Ten List">
+    <Sectionhead>
+        <Fragment slot="heading">Top Ten List</Fragment>
+        <Fragment slot="subheading">My Late Show with David Letterman's winning top ten list entry.</Fragment>
+    </Sectionhead>
+    <article class="max-w-[85ch] mx-auto mt-8">
+        <header>
+            <Image
+                src={LSLogo}
+                alt="Late Show with David Letterman marquee outside of the Ed Sullivan Theatre in New York City"
+                width="750"
+                height="500"
+            />
+            <h2 class="text-5xl my-6 tracking-tight dark:text-gray-300">
+                Top Ten Reasons New York City is Excited About the World Series
+            </h2>
+            <h3
+                class="text-2xl my-6 tracking-tight text-slate-600 dark:text-gray-400"
+            >
+                With the New York Yankees and the New York Mets in the World
+                Series, the Big Apple is abuzz with excitement. Here are the top
+                ten reasons New York City is excited about the World Series.
+            </h3>
+        </header>
+        <ol class="list-decimal space-y-2 ml-6 my-6" reversed>
+            {
+                topTenList.map((item) => (
+                    <li class={item.author.includes("Brett") ? "text-gray-800 dark:text-gray-300" : "text-gray-500"}>
+                        <span class="mr-4">{item.entry}</span>
+                        <em>{item.author}, {item.location}</em>
+                    </li>
+                ))
+            }
+        </ol>
+
+        <p class="mt-12 text-gray-500">
+            <em>The Late Show with David Letterman</em> website used to run a contest where people could submit their own "Top Ten" entries. On 
+            <time datetime="2000-10-19">October 19, 2000</time>, my entry was chosen for the #3 spot on this list, netting me bragging rights and a <em>Late Show with David Letterman</em> t-shirt.
+        </p>
+    </article>
+</MainLayout>

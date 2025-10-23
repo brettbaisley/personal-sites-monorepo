@@ -1,0 +1,14 @@
+---
+import { Image } from 'astro:assets';
+import WestJetCover from '../images/westjet-mag-05-17-cover.jpeg';
+---
+
+<aside class="bg-gradient-to-r from-cyan-500 to-blue-500">
+    <div class="p-12 text-center text-2xl text-white">
+        <h2 class="text-4xl mb-8">Fun Fact</h2>
+        <p>I have a photo published in the <time datetime="2007-05-01">May 2017</time> issue of <em>WestJet Magazine</em>. Click the image to see!</p>
+        <a href="/westjet">
+            <Image class="m-auto p-8" src={WestJetCover} alt="WestJet Magazine cover image, May 2017 edition, of a woman walking down a cobblestone road" width={200} />
+        </a>
+    </div>
+</aside>

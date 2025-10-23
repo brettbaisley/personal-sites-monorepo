@@ -1,0 +1,18 @@
+{
+  "name": "personal-sites-monorepo",
+  "private": true,
+  "workspaces": [
+    "sites/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:dev": "npm --workspace sites/baisley.dev run dev",
+    "build:dev": "npm --workspace sites/baisley.dev run build",
+    "preview:dev": "npm --workspace sites/baisley.dev run preview",
+    "dev:com": "npm --workspace sites/baisley.com run dev",
+    "build:com": "npm --workspace sites/baisley.com run build",
+    "preview:com": "npm --workspace sites/baisley.com run preview"
+  },
+  "devDependencies": {
+  }
+}

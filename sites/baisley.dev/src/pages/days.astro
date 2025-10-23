@@ -1,0 +1,90 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import Sectionhead from "../components/Sectionhead.astro";
+import Button from "../components/ui/Button.astro";
+
+import SVGCake from '../assets/icons/cake-candles.svg';
+import SVGCristmasTree from "../assets/icons/tree-christmas.svg";
+import SVGHalloween from '../assets/icons/jack-o-lantern.svg';
+---
+
+<MainLayout title="Brett Baisley | Days Until">
+    <Sectionhead>
+        <Fragment slot="heading">Days Until</Fragment>
+        <Fragment slot="subheading">This is a page for my kids to show how long until a few special days.</Fragment>
+    </Sectionhead>
+    <div class="flex flex-col items-center justify-evenly my-8">
+        <div class="occasions flex flex-nowrap gap-4 overflow-x-auto w-full scheme-light dark:scheme-dark pb-2">
+            <Button class="occasion whitespace-nowrap" value="12-15">
+                <SVGCake width={24} height={24} class="inline-block mr-1 mb-1" />
+                Mateo's Birthday
+            </Button>
+                
+            <Button class="occasion whitespace-nowrap" value="01-18">
+                <SVGCake width={24} height={24} class="inline-block mr-1 mb-1" />
+                Lucas's Birthday
+            </Button>
+            <Button class="occasion whitespace-nowrap" value="06-15">
+                <SVGCake width={24} height={24} class="inline-block mr-1 mb-1" />
+                Mom's Birthday
+            </Button>
+            <Button class="occasion whitespace-nowrap" value="04-21">
+                <SVGCake width={24} height={24} class="inline-block mr-1 mb-1" />
+                Dad's Birthday
+            </Button>
+            <Button class="occasion whitespace-nowrap" value="12-25">
+                <SVGCristmasTree width={24} height={24} class="inline-block mr-1 mb-1" />
+                Christmas
+            </Button>
+            <Button class="occasion whitespace-nowrap" value="10-31">
+                <SVGHalloween width={24} height={24} class="inline-block mr-1 mb-1" />
+                Halloween
+            </Button>
+        </div>
+
+
+        <div class="my-40">
+            <p id="days" class="text-9xl text-gray-950 dark:text-gray-200 text-center">&nbsp;</p>
+            <p id="slug" class="text-xl text-gray-600 dark:text-gray-400 text-center">&nbsp;</p>
+        </div>
+    </div>
+
+</MainLayout>
+
+
+<script>
+    const occasions = document.querySelectorAll(".occasion");
+    const days = document.getElementById("days");
+    const slug = document.getElementById("slug");
+
+    const calculateDaysUntil = (selectedDate: string) => {
+        const today = new Date();
+        const [month, day] = selectedDate.split("-");
+
+        let occasionDate = new Date(today.getFullYear(), +month - 1, +day);
+        var daysAway = Math.ceil((occasionDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+
+        if (daysAway < 0) {
+            occasionDate = new Date(today.getFullYear() + 1, +month - 1, +day);
+            daysAway = Math.ceil((occasionDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+        }
+        return daysAway
+    }
+   
+    // Function to handle click events
+    const handleClick = (event: Event) => {
+        if (event.target) {
+            const daysUntil = calculateDaysUntil((event.target as HTMLButtonElement).value);
+            if (days) {
+                days.innerText = daysUntil.toString();
+            }
+            if (slug) {
+                slug.innerHTML = daysUntil === 1 ? `day until <em>${(event.target as HTMLButtonElement).textContent}</em>` : `days until <em>${(event.target as HTMLButtonElement).textContent}</em>`;
+            }
+        }
+    };
+ 
+    occasions.forEach((occasion) => {
+        occasion.addEventListener('click', handleClick);
+    });    
+</script>

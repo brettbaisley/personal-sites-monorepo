@@ -1,0 +1,27 @@
+---
+import Header from '../components/Header.astro'
+import Footer from '../components/Footer.astro'
+import {Image} from 'astro:assets'
+import WestJetArticleImage from '../images/westjet-mag-05-17-story.jpg';
+import BaseLayout from '../layouts/BaseLayout.astro'
+import CircleArrowLeft from '../images/icons/circle-arrow-left.svg';
+---
+
+<BaseLayout>
+    <Header />
+
+    <section class="px-4 py-12 mx-auto max-w-5xl">
+        <h2 class="text-4xl text-center">WestJet Magazine Article</h2>
+        <p class="mt-8">One of my proudest photography moments was having my photo of Ritchie Wharf prominently featured in WestJet Magazine, 
+            the airline’s inflight publication. Showcased at the center of the page, my image captured the charm of this 
+            iconic Miramichi destination, highlighted in an article on must-visit spots in the area. Seeing my work published 
+            and inspiring travelers to explore new places was an incredible honor!</p>
+        <div class="mx-auto max-w-3/4 my-8 shadow-lg">
+            <Image src={WestJetArticleImage} alt="WestJet Magazine, May 2017, Article on Miramichi" />
+        </div>
+        <a href="/" class="p-12">
+            <CircleArrowLeft width={32} height={32} class="inline mr-2"/> Home
+        </a>
+    </section>
+    <Footer />
+</BaseLayout>

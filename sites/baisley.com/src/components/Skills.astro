@@ -1,0 +1,75 @@
+---
+
+const skills_tech = [
+    'Windows',
+    'Linux',
+    'MacOS',
+    'HTML',
+    'CSS',
+    'Javascript',
+    'React',
+    'Node.js',
+    'Python',
+    'Shell Scripting',
+    'SQL',
+    'Sybase',
+    'DB2',
+    'Git/GitHub',
+    'Bitbucket',
+    'JIRA',
+    'Selenium',
+    'Splunk',
+    'Prometheus',
+    'Grafana',
+    'OpenTelemetry',
+    'Apica',
+    'AppDynamics',
+    'Kafka',
+    'Autosys',
+    'ServiceNow',
+    'OpenAI',
+    'Ansible',
+    'Automation',
+    'Microsoft 365',
+    'Microsoft Copilot'
+]
+
+const skills_soft = [
+    'Leadership',
+    'Cross-team collaboration',
+    'Analytical',
+    'DevOps',
+    'SRE',
+    'ITIL',
+    'Problem Solving',
+    'Automation',
+    'TOIL Reduction',
+    'Team Player',
+    'Critical Thinker',
+    'Project Management',
+    'Disaster Recovery',
+    'Capacity Management'
+]
+
+---
+
+<section id="skills" class="px-4 py-12 text-center">
+    <h2 class="text-4xl">Skills</h2>
+    <h3 class="text-2xl font-bold mt-12">Technical Skills</h3>
+    <ul class="m-auto mt-8 text-md flex flex-wrap gap-x-8 gap-y-4 max-w-3xl">
+        {
+            skills_tech.sort().map(skill => (
+                <li class="">{skill}</li>
+            ))
+        }
+    </ul>
+    
+    <h3 class="text-2xl font-bold mt-12">Soft Skills</h3>
+    <ul class="m-auto mt-8 text-md flex flex-wrap gap-x-8 gap-y-4 max-w-3xl">
+        {
+            skills_soft.sort().map(skill => (
+                <li>{skill}</li>
+            ))
+        }
+    </ul>
+  </section>

@@ -1,0 +1,127 @@
+---
+---
+
+<form action="#" method="post" id="contact-form">
+    <div class="flex flex-col">
+        <h3 class="text-4xl text-center">Contact Me</h3>
+
+        <label for="name" class="mt-8">Name *</label>
+        <input type="text" name="name" id="name" placeholder="John Doe" required autocomplete="given-name" class="p-4 rounded border-solid border-1 border-gray-700 bg-gray-800">
+
+        <label for="email" class="mt-8">Email *</label>
+        <input type="email" name="email" id="email" placeholder="john@doe.com" required autocomplete="off" class="p-4 rounded border-solid border-1 border-gray-700 bg-gray-800">
+        
+        <label for="message" class="mt-8">Message *</label>
+        <textarea name="message" id="message" cols="30" rows="6" required class="p-4 rounded border-solid border-1 border-gray-700 bg-gray-800"></textarea>
+
+        <input type="text" name="website" style="display: none" tabindex="-1" autocomplete="off" />
+        <input type="hidden" name="formStart" value="${Date.now()}" /> 
+
+        <p id="contact-form-status" class=""></p>
+
+        <!-- Loading indicator -->
+        <div id="loading-indicator" class="hidden mt-4 flex items-center">
+            <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-500 mr-2"></div>
+            <span class="text-blue-400">Sending message...</span>
+        </div>
+
+        <!-- Tailwindcss V4 beta doesn't have SafeList, so this was to get the styling added to the CSS file -->
+        <p hidden class="mt-8 p-4 rounded-xl border border-green-500 border-red-500 bg-green-900 bg-red-900 text-green-400 text-red-400 animate-spin"></p>
+
+        <div>
+            <button id="submit" class="mt-8 p-4 rounded bg-blue-500 hover:bg-blue-600 disabled:bg-gray-500 disabled:cursor-not-allowed cursor-pointer transition-colors" type="submit">Send Message</button>
+            <button id="resetButton" class="mt-8 p-4 rounded border border-blue-500 cursor-pointer" type="reset">Clear</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    // Add EventListener to clear status messages
+    const submitButton = document.getElementById("submit") as HTMLButtonElement;
+    const clearFormButton = document.getElementById("resetButton") as HTMLButtonElement;
+    const statusElement = document.getElementById("contact-form-status") as HTMLElement;
+    const loadingIndicator = document.getElementById("loading-indicator") as HTMLElement;
+    const contactForm = document.getElementById("contact-form") as HTMLFormElement;
+    const formName = document.getElementById('name') as HTMLInputElement;
+    const formEmail = document.getElementById('email') as HTMLInputElement;
+    const formMessage = document.getElementById('message') as HTMLTextAreaElement;
+
+    if (clearFormButton) {
+        clearFormButton.addEventListener('click', event => {
+            if (statusElement) {
+                statusElement.innerText = "";
+                statusElement.className = "";
+            }
+            if (loadingIndicator) {
+                loadingIndicator.classList.add("hidden");
+            }
+        });
+    };
+    
+    // Add EventListener to trigger when submitting form
+    if (contactForm) {
+        contactForm.addEventListener('submit', event => {
+            event.preventDefault();
+            submitButton.disabled = true;
+            submitButton.textContent = "Sending...";
+            
+            // Clear previous status and show loading indicator
+            if (statusElement) {
+                statusElement.innerText = "";
+                statusElement.className = "";
+            }
+            if (loadingIndicator) {
+                loadingIndicator.classList.remove("hidden");
+            }
+            
+            submitForm();
+        });
+    }
+
+    async function submitForm() {
+        const targetAPI = '/api/sendemail';
+        
+        var formData = new URLSearchParams();
+        if (formName && formEmail && formMessage) {
+            formData.append('name', formName.value || "From Website");
+            formData.append('email', formEmail.value || "unknown@user.com");
+            formData.append('message', formMessage.value || "No message");
+        }
+
+        try {
+            const response = await fetch(targetAPI, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: formData.toString()
+            });
+
+            if (response.status === 200) {
+                if (statusElement) {
+                    statusElement.innerText = await response.text();
+                    statusElement.classList.add("mt-8","p-4","rounded-xl","border","border-green-500","bg-green-900","text-green-400");
+                }
+            } else {
+                if (statusElement) {
+                    statusElement.innerText = await response.text();
+                    statusElement.classList.add("mt-8","p-4","rounded-xl","border","border-red-500","bg-red-900","text-red-400");
+                }
+            }
+        } catch (error) {
+            if (statusElement) {
+                statusElement.innerText = "An error occurred sending message. Please try later.";
+                statusElement.classList.add("mt-8","p-4","rounded-xl","border","border-red-500","bg-red-900","text-red-400");
+            }
+        } finally {
+            // Hide loading indicator and restore button
+            if (loadingIndicator) {
+                loadingIndicator.classList.add("hidden");
+            }
+            if (submitButton) {
+                submitButton.disabled = false;
+                submitButton.textContent = "Send Message";
+            }
+        }
+    }
+</script>

@@ -1,0 +1,24 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import Sectionhead from "../../components/Sectionhead.astro";
+
+import { getCollection } from "astro:content";
+const authors = await getCollection("authors");
+---
+<MainLayout title="Brett Baisley | Blog | Authors">
+    <Sectionhead>
+        <Fragment slot="heading">Authors</Fragment>
+        <Fragment slot="subheading">Bio pages of all authors of Brett's Blog.</Fragment>
+    </Sectionhead>
+
+{
+    authors.map((author) => {
+        return (
+            <div class="mt-8">
+                <p class="text-gray-800 dark:text-gray-200">{author.data.first_name} {author.data.last_name}</p>
+                <p class="text-gray-500">{author.data.bio}</p>
+            </div>
+        );
+    })
+}
+</MainLayout>

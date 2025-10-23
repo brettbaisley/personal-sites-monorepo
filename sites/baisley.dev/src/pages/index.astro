@@ -1,0 +1,68 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import Sectionhead from "../components/Sectionhead.astro";
+import Link from "../components/ui/Link.astro";
+
+import SVGBlog from '../assets/icons/blog.svg';
+import SVGCalendar from '../assets/icons/calendar-day.svg';
+import SVGGift from '../assets/icons/gift.svg';
+import SVGList from '../assets/icons/list-ol.svg';
+
+const apps = [
+    {
+        title: "Blog",
+        url: "/blog/",
+        icon: SVGBlog,
+        description: "Just a small personal blog that doesn't really contain anything useful ... yet!",
+        tags: ["Astro"]
+    },
+    {
+        title: "Days Until",
+        url: "/days",
+        icon: SVGCalendar,
+        description: "An Azure static web app (SWA) built to allow my kids to see how long until a few special days.",
+        tags: ["HTML", "CSS", "Javascript"]
+    },
+    {
+        title: "Gifts",
+        url: "http://gifts.baisley.dev",
+        icon: SVGGift,
+        description: "A registry/wish-list style React app, to remember some gifts my kids said they wanted.",
+        tags: ["React", "CosmosDB"]
+    },
+    {
+        title: "Top-Ten",
+        url: "/top-ten",
+        icon: SVGList,
+        description: "My Late Show with David Letterman's winning top ten list entry.",
+        tags: ["HTML"]
+    }
+]
+---
+
+<MainLayout title="Brett Baisley | Home">
+    <Sectionhead>
+        <Fragment slot="heading">Welcome</Fragment>
+        <Fragment slot="subheading">This is my personal page for exploration and innovation.</Fragment>
+    </Sectionhead>
+    <ul class="grid grid-cols-1 md:grid-cols-2 gap-12 mt-12 ">
+        {
+            apps.map((app) => (
+                <li class="flex flex-col gap-2 shadow-md border border-gray-200 dark:border-gray-700 rounded-lg p-4 bg-white dark:bg-gray-900">
+                    <h2 class="text-2xl text-gray-800 dark:text-gray-200">
+                        <app.icon width={36} height={36} class="dark:fill-white inline mr-2" />
+                        <Link href={app.url} style="primary">{app.title}</Link>
+                    </h2>
+                    <p class="my-2 text-gray-500 dark:text-gray-500">{app.description}</p>
+                    <div>
+                        {
+                            app.tags.map((tag) => (
+                                <span class="rounded-2xl bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-400 px-2 py-1 text-sm mr-2">{tag}</span>
+                            ))
+                        }
+                    </div>
+                </li>
+            ))
+        }
+    </ul>
+</MainLayout>

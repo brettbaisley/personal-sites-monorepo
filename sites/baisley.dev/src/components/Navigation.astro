@@ -1,0 +1,85 @@
+---
+import SVGBars from '../assets/icons/bars.svg';
+import SVGX from '../assets/icons/x.svg';
+import Link from './ui/Link.astro';
+
+const menuitems = [
+    { 
+        name: "Home",
+        url: "/"
+    },
+    { 
+        name: "About", 
+        url: "/about", 
+    },
+    { 
+        name: "Days", 
+        url: "/days", 
+    },
+    { 
+        name: "Blog",
+        url: "/blog"
+    },
+    { 
+        name: "Top Ten", 
+        url: "/top-ten", 
+    },
+];
+
+const pathname = new URL(Astro.request.url).pathname;
+console.log(pathname);
+---
+
+<!-- Mobile Menu -->
+ <nav aria-label="Primary">
+    <button class="open-menu dark:text-white cursor-pointer p-4 font-bold text-2xl md:hidden">
+        <SVGBars width={32} height={32} class="dark:fill-white" />
+    </button>
+ </nav>
+ <div class="mobile-nav hidden flex flex-col  z-20 top-0 left-0 right-0 overflow-y-auto fixed h-dvh max-h-dvh px-4 bg-gray-100 dark:bg-gray-950 rounded-lg shadow-lg text-gray-700 dark:text-gray-300">
+    <button class="close-menu text-right dark:text-white cursor-pointer p-4 font-bold text-2xl hover:text-gray-600"><SVGX width={32} height={32} class="dark:fill-white" /></button>
+    <ul class="space-y-6">
+        {
+            menuitems.map((link) => (
+                <li class="border-t-1 m-0">
+                    <Link class={`block p-8 text-xl hover:text-gray-600 ${pathname === link.url ? 'active' : ''}`} href={link.url} aria-label={link.name}>{link.name}</Link>
+                </li>
+            ))
+        }
+    </ul>
+    <div class="mt-auto text-center text-sm p-4">
+        All Rights Reserved
+    </div>
+</div>
+
+
+<!-- Desktop Menu -->
+<ul class="hidden md:flex text-gray-700 dark:text-gray-300 py-4">
+    {
+        menuitems.map((link) => (
+            <li><Link class={`px-4 hover:text-gray-400 ${pathname === link.url ? 'text-gray-500' : ''}`} href={link.url}>{link.name}</Link></li>
+        ))
+    }
+</ul>
+
+<script>
+    // WHen document dom loaded, get the hamburger button and the mobile menu
+    document.addEventListener('DOMContentLoaded', () => {
+        const htmlTag = document.querySelector('html');
+        const openMenu = document.querySelector('.open-menu');
+        const closeMenu = document.querySelector('.close-menu');
+        const mobileMenu = document.querySelector('.mobile-nav');
+
+        // When the hamburger button is clicked, toggle the hidden class on the mobile menu
+        openMenu?.addEventListener('click', () => {
+            mobileMenu?.classList.toggle('hidden');
+            htmlTag?.classList.toggle('overflow-hidden');
+        });
+
+        // When the close button is clicked, toggle the hidden class on the mobile menu
+        closeMenu?.addEventListener('click', () => {
+            mobileMenu?.classList.toggle('hidden');
+            htmlTag?.classList.toggle('overflow-hidden');
+        });
+    });
+</script>

@@ -1,0 +1,61 @@
+---
+import { getCollection } from "astro:content";
+import MainLayout from "../../layouts/MainLayout.astro";
+import Sectionhead from "../../components/Sectionhead.astro";
+import Link from "../../components/ui/Link.astro";
+import Pagination from "../../components/Pagination.astro";
+
+interface Post {
+  id: string;
+  data: {
+    pubDate: string;
+    title: string;
+    description: string;
+  };
+}
+
+interface PageProps {
+  data: Post[];
+  url: {
+    prev: string | null;
+    next: string | null;
+  };
+}
+
+export async function getStaticPaths({ paginate }: { paginate: any }) {
+  const allPosts = await getCollection('blog');
+  const sortedPosts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+  return paginate(sortedPosts, { pageSize: 10 });
+}
+
+const { page } = Astro.props as { page: PageProps };
+
+---
+
+<MainLayout title="Brett Baisley | Blog">
+  <Sectionhead>
+    <Fragment slot="heading">Brett's Blog</Fragment>
+    <Fragment slot="subheading">This is the personal blog written by Brett Baisley. Who is that? Well, not only is he a fantastic guy, he is a support engineer with 20+ years experience. He started blogging as he incorrectly thought the rest of the world was interested in his thoughts. Poor guy, how wrong he was...</Fragment>
+  </Sectionhead>
+  <h3 class="text-3xl mt-8 text-gray-700 dark:text-gray-300">Blog Articles</h3>
+  <ul class="max-w-3xl mx-auto mt-4">
+    {
+      page.data.map((post) => {
+        const pubDate = new Date(post.data.pubDate);
+
+        return(
+        <li class="mb-8">
+          <Link href={`/blog/${post.id}/`} class="block text-2xl text-gray-800 dark:text-gray-200">{post.data.title}</Link>
+          <time class="text-xs text-gray-500" datetime={pubDate.toISOString()}>{pubDate.toLocaleDateString(undefined, {
+            dateStyle: "medium",
+            timeZone: "UTC"
+            })}
+          </time>
+          <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">{post.data.description}</p>
+        </li>
+        );
+      })
+    }
+  </ul>
+  <Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />
+</MainLayout>

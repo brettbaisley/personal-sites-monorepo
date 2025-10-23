@@ -1,0 +1,33 @@
+---
+
+const career_highlights = [
+    {
+        title: 'Years of experience',
+        value: '20+'
+    },
+    {
+        title: 'Applications Supported',
+        value: '60+'
+    },
+    {
+        title: 'Reduction of Outages',
+        value: '33%'
+    },
+    {
+        title: 'TOIL Reduction',
+        value: '30%'
+    }
+]
+
+---
+
+<section id="highlights" class="px-4 py-12">
+    <h2 class="text-4xl text-center">Career Highlights</h2>
+    <ul class="flex flex-col flex-wrap md:flex-row gap-px text-center border-4 border-blue-50 rounded-xl mt-8">
+    {
+        career_highlights.map(highlight => (
+            <li class="flex-1 text-sm text-slate-700 bg-blue-50 p-4"><em class="text-6xl block tracking-tighter text-slate-950">{highlight.value}</em>{highlight.title}</li>
+        ))
+    }
+    </ul>
+</section>

@@ -1,0 +1,40 @@
+---
+interface Props {
+  size?: "md" | "lg";
+  block?: boolean;
+  style?: "outline" | "primary" | "inverted";
+  class?: string;
+  [x: string]: any;
+}
+
+const {
+  size = "md",
+  style = "primary",
+  block,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const sizes = {
+  md: "px-5 py-2.5",
+  lg: "px-6 py-3",
+};
+
+const styles = {
+  outline:  "border-black text-white dark:text-black bg-purple-600 hover:bg-purpose-600 dark:bg-purple-400 dark:hover:bg-purple-500",
+  primary:  "border-transparent text-white dark:text-black bg-purple-600 hover:bf-purple-500 dark:bg-purple-400 dark:hover:bg-purple-500",
+  inverted: "border-black text-white dark:text-black bg-purple-600 dark:bg-purple-400",
+};
+---
+
+<button
+  {...rest}
+  class:list={[
+    "border-2 rounded text-center transition focus-visible:ring-2 ring-offset-2 ring-gray-200",
+    block && "w-full",
+    sizes[size],
+    styles[style],
+    className,
+  ]}
+  ><slot />
+</button>

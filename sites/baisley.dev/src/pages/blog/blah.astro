@@ -1,0 +1,37 @@
+---
+import { getCollection } from "astro:content";
+import MainLayout from "../../layouts/MainLayout.astro";
+import Sectionhead from "../../components/Sectionhead.astro";
+import Link from "../../components/ui/Link.astro";
+
+const allPosts = await getCollection("blog");
+allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<MainLayout title="Brett Baisley | Blog">
+  <Sectionhead>
+    <Fragment slot="heading">Brett's Blog</Fragment>
+    <Fragment slot="subheading">This is the personal blog written by Brett Baisley. Who is that? Well, not only is he a fantastic guy, he is a support engineer with 20+ years experience. He started blogging as he incorrectly thought the rest of the world was interested in his thoughts. Poor guy, how wrong he was...</Fragment>
+  </Sectionhead>
+  <h3 class="text-3xl mt-8 text-gray-700 dark:text-gray-300">Blog Articles</h3>
+  <ul class="grid grid-cols-1 lg:max-w-none md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-4">
+    {
+      allPosts.map((post) => {
+        const pubDate = new Date(post.data.pubDate);
+
+        return(
+        <li class="border border-gray-200 dark:border-gray-700 rounded-lg p-4 bg-white dark:bg-gray-900">
+          <time class="text-xs text-gray-500" datetime={pubDate.toISOString()}>{pubDate.toLocaleDateString(undefined, {
+            dateStyle: "medium",
+            timeZone: "UTC"
+            })}
+          </time>
+          <p class="mt-2 text-xl text-gray-800 dark:text-gray-200">{post.data.title}</p>
+          <p class="mt-2 mb-4 line-clamp-3 text-sm text-gray-500">{post.data.description}</p>
+          <Link href={`/blog/${post.id}/`} class="text-gray-200 link-with-right-arrow">Read More</Link>
+        </li>
+        );
+      })
+    }
+  </ul>
+</MainLayout>
