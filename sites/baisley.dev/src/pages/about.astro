@@ -9,7 +9,7 @@ const brett = await getEntry("authors", "brett-baisley");
 <MainLayout title="Brett Baisley | About Me">
     <Sectionhead>
        <Fragment slot="heading">About Me</Fragment>
-       <Fragment slot="subheading">This is my personal page for exploration or new techniques and innovation.</Fragment>
+       <Fragment slot="subheading">This is my personal page for exploration of new techniques and innovation.</Fragment>
     </Sectionhead>
     <p class="my-2 text-gray-500 dark:text-gray-500">{`${brett?.data.first_name} ${brett?.data.last_name}`}</p>
     <p class="my-2 text-gray-500 dark:text-gray-500">{brett?.data.bio}</p>
