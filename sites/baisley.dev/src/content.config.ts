@@ -5,10 +5,15 @@ import { glob } from 'astro/loaders';
 const blog = defineCollection({
     loader: glob({ pattern: '**/*.{md,mdx}', base: "./src/content/blog" }),
     schema: z.object({
-      title: z.string(),
+      title: z.string().min(1),
       subtitle: z.string().optional(),
-      pubDate: z.date(),
-      description: z.string(),
+      pubDate: z.preprocess((arg) => {
+        if (typeof arg === 'string' || typeof arg === 'number') return new Date(arg);
+        return arg;
+      }, z.date()),
+      description: z.string().optional(),
+      tags: z.array(z.string()).optional(),
+      draft: z.boolean().optional().default(false),
       author: reference('authors'),
     })
 });
@@ -19,7 +24,8 @@ const authors = defineCollection({
     first_name: z.string(),
     last_name: z.string(),
     role: z.string().optional(),
-    bio: z.string()
+    bio: z.string(),
+    avatar: z.string().url().optional(),
     })
  });
 

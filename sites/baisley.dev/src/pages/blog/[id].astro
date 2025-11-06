@@ -13,9 +13,22 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
+
+// Publish date and reading time estimation
+const pubDate = post.data.pubDate ? new Date(post.data.pubDate) : null;
+let readingTime = null;
+if (typeof (post as any).body === 'string') {
+  const words = (post as any).body.split(/\s+/).filter(Boolean).length;
+  readingTime = Math.max(1, Math.ceil(words / 200));
+}
+
 ---
 <MainLayout title={`Brett Baisley | Blog | ${post.data.title}`}>
+    <div class="max-w-3xl mx-auto mt-6">
+      <a href="/blog/" class="text-sm text-blue-600 hover:underline">← Back to blog</a>
+    </div>
   <BlogPost frontmatter={post.data}>
+    {readingTime && <div>{readingTime} min read</div>}
       <Content />
   </BlogPost>
 </MainLayout>

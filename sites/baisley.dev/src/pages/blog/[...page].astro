@@ -8,9 +8,9 @@ import Pagination from "../../components/Pagination.astro";
 interface Post {
   id: string;
   data: {
-    pubDate: string;
+    pubDate: string | Date;
     title: string;
-    description: string;
+    description?: string;
   };
 }
 
@@ -24,38 +24,62 @@ interface PageProps {
 
 export async function getStaticPaths({ paginate }: { paginate: any }) {
   const allPosts = await getCollection('blog');
-  const sortedPosts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+  const sortedPosts = allPosts.sort((a, b) => {
+    const da = new Date(a.data.pubDate).valueOf();
+    const db = new Date(b.data.pubDate).valueOf();
+    return db - da;
+  });
   return paginate(sortedPosts, { pageSize: 10 });
 }
 
 const { page } = Astro.props as { page: PageProps };
 
+
 ---
+
+{
+  page.url.prev || page.url.next ? (
+    <head>
+      {page.url.prev && <link rel="prev" href={page.url.prev} />}
+      {page.url.next && <link rel="next" href={page.url.next} />}
+    </head>
+  ) : null
+}
 
 <MainLayout title="Brett Baisley | Blog">
   <Sectionhead>
     <Fragment slot="heading">Brett's Blog</Fragment>
     <Fragment slot="subheading">This is the personal blog written by Brett Baisley. Who is that? Well, not only is he a fantastic guy, he is a support engineer with 20+ years experience. He started blogging as he incorrectly thought the rest of the world was interested in his thoughts. Poor guy, how wrong he was...</Fragment>
   </Sectionhead>
+ 
   <h3 class="text-3xl mt-8 text-gray-700 dark:text-gray-300">Blog Articles</h3>
+ 
   <ul class="max-w-3xl mx-auto mt-4">
-    {
+    {page.data.length === 0 ? (
+      <li class="text-sm text-gray-600 dark:text-gray-400">No posts found.</li>
+    ) : (
       page.data.map((post) => {
         const pubDate = new Date(post.data.pubDate);
+        const description = post.data.description ?? "No summary available.";
 
-        return(
+        // Truncate description to a reasonable length (optional)
+        const maxLen = 200;
+        const shortDesc = description.length > maxLen ? description.slice(0, maxLen).trim() + "…" : description;
+
+        return (
         <li class="mb-8">
-          <Link href={`/blog/${post.id}/`} class="block text-2xl text-gray-800 dark:text-gray-200">{post.data.title}</Link>
-          <time class="text-xs text-gray-500" datetime={pubDate.toISOString()}>{pubDate.toLocaleDateString(undefined, {
-            dateStyle: "medium",
-            timeZone: "UTC"
-            })}
-          </time>
-          <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">{post.data.description}</p>
+          <article>
+            <Link href={`/blog/${post.id}/`} class="block text-2xl text-gray-800 dark:text-gray-200">{post.data.title}</Link>
+            <time class="text-xs text-gray-500" datetime={pubDate.toISOString()}>
+              {pubDate.toLocaleDateString(undefined, { dateStyle: "medium", timeZone: "UTC" })}
+            </time>
+            <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">{shortDesc}</p>
+          </article>
         </li>
         );
       })
-    }
+    )}
   </ul>
+
   <Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />
 </MainLayout>

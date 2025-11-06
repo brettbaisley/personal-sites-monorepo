@@ -1,0 +1,62 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+import Sectionhead from "../../../components/Sectionhead.astro";
+import Link from "../../../components/ui/Link.astro";
+
+import { getCollection } from "astro:content";
+const authors = await getCollection("authors");
+---
+<MainLayout title="Brett Baisley | Blog | Authors">
+    <Sectionhead>
+        <Fragment slot="heading">Authors</Fragment>
+        <Fragment slot="subheading">Bio pages of all authors of Brett's Blog.</Fragment>
+    </Sectionhead>
+
+    {authors.length === 0 ? (
+        <p class="mt-6 text-sm text-gray-600 dark:text-gray-400">No authors found.</p>
+    ) : (
+        // Sort authors by last name for predictable order
+        <ul class="mt-8 space-y-6 max-w-3xl mx-auto">
+            {authors
+                .slice()
+                .sort((a, b) => {
+                    const al = (a.data.last_name || "").toLowerCase();
+                    const bl = (b.data.last_name || "").toLowerCase();
+                    const cmp = al.localeCompare(bl);
+                    if (cmp !== 0) return cmp;
+                    const af = (a.data.first_name || "").toLowerCase();
+                    const bf = (b.data.first_name || "").toLowerCase();
+                    return af.localeCompare(bf);
+                })
+                .map((author) => {
+                    const bio = author.data.bio ?? "";
+                    const maxLen = 240;
+                    const shortBio = bio.length > maxLen ? bio.slice(0, maxLen).trim() + "…" : bio;
+                    const avatar = author.data.avatar;
+                    const authorHref = `/blog/authors/${author.id}/`; // adjust if you use slug instead
+
+                    return (
+                        <li class="flex items-start gap-4">
+                            {avatar && (
+                                <img
+                                    src={avatar}
+                                    alt={`${author.data.first_name} ${author.data.last_name}`}
+                                    class="w-12 h-12 rounded-full object-cover"
+                                    loading="lazy"
+                                />
+                            ) }
+                            <div>
+                                <Link href={authorHref} class="text-lg font-medium text-gray-800 dark:text-gray-200">
+                                    {author.data.first_name}&nbsp;{author.data.last_name}
+                                </Link>
+                                {author.data.role && (
+                                    <div class="text-sm text-gray-500">{author.data.role}</div>
+                                )}
+                                <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">{shortBio}</p>
+                            </div>
+                        </li>
+                    );
+                })}
+        </ul>
+    )}
+</MainLayout>
