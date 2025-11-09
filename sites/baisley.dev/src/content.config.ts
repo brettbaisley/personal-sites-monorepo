@@ -7,7 +7,7 @@ const blog = defineCollection({
     schema: z.object({
       title: z.string().min(1),
       subtitle: z.string().optional(),
-      pubDate: z.preprocess((arg) => {
+      publish_date: z.preprocess((arg) => {
         if (typeof arg === 'string' || typeof arg === 'number') return new Date(arg);
         return arg;
       }, z.date()),

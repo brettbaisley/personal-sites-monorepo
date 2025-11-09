@@ -1,7 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import BlogPost from '../../components/BlogPost.astro';
-import MainLayout from '../../layouts/MainLayout.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -15,7 +15,7 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 
 // Publish date and reading time estimation
-const pubDate = post.data.pubDate ? new Date(post.data.pubDate) : null;
+const pubDate = post.data.publish_date ? new Date(post.data.publish_date) : null;
 let readingTime = null;
 if (typeof (post as any).body === 'string') {
   const words = (post as any).body.split(/\s+/).filter(Boolean).length;
@@ -23,12 +23,11 @@ if (typeof (post as any).body === 'string') {
 }
 
 ---
-<MainLayout title={`Brett Baisley | Blog | ${post.data.title}`}>
+<BaseLayout pageTitle={`Brett Baisley | Blog | ${post.data.title}`}>
     <div class="max-w-3xl mx-auto mt-6">
       <a href="/blog/" class="text-sm text-blue-600 hover:underline">← Back to blog</a>
     </div>
-  <BlogPost frontmatter={post.data}>
-    {readingTime && <div>{readingTime} min read</div>}
-      <Content />
-  </BlogPost>
-</MainLayout>
+
+    <Content />
+
+</BaseLayout>

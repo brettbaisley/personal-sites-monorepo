@@ -1,5 +1,5 @@
 ---
-import MainLayout from "../layouts/MainLayout.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
 import Sectionhead from "../components/Sectionhead.astro";
 import Button from "../components/ui/Button.astro";
 
@@ -8,13 +8,13 @@ import SVGCristmasTree from "../assets/icons/tree-christmas.svg";
 import SVGHalloween from '../assets/icons/jack-o-lantern.svg';
 ---
 
-<MainLayout title="Brett Baisley | Days Until">
+<BaseLayout pageTitle="Brett Baisley | Days Until">
     <Sectionhead>
         <Fragment slot="heading">Days Until</Fragment>
         <Fragment slot="subheading">This is a page for my kids to show how long until a few special days.</Fragment>
     </Sectionhead>
     <div class="flex flex-col items-center justify-evenly my-8">
-        <div class="occasions flex flex-nowrap gap-4 overflow-x-auto w-full scheme-light dark:scheme-dark pb-2">
+    <div class="occasions flex flex-nowrap gap-4 overflow-x-auto w-full scheme-light pb-2">
             <Button class="occasion whitespace-nowrap" value="12-15">
                 <SVGCake width={24} height={24} class="inline-block mr-1 mb-1" />
                 Mateo's Birthday
@@ -44,12 +44,12 @@ import SVGHalloween from '../assets/icons/jack-o-lantern.svg';
 
 
         <div class="my-40">
-            <p id="days" class="text-9xl text-gray-950 dark:text-gray-200 text-center">&nbsp;</p>
-            <p id="slug" class="text-xl text-gray-600 dark:text-gray-400 text-center">&nbsp;</p>
+            <p id="days" class="text-9xl text-gray-950 text-center">&nbsp;</p>
+            <p id="slug" class="text-xl text-gray-600 text-center">&nbsp;</p>
         </div>
     </div>
 
-</MainLayout>
+</BaseLayout>
 
 
 <script>

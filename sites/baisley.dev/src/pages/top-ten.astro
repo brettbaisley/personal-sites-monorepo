@@ -1,5 +1,5 @@
 ---
-import MainLayout from "../layouts/MainLayout.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
 import Sectionhead from "../components/Sectionhead.astro";
 
 import { Image } from "astro:assets";
@@ -59,7 +59,7 @@ const topTenList = [
 ];
 ---
 
-<MainLayout title="Brett Baisley | Top Ten List">
+<BaseLayout pageTitle="Brett Baisley | Top Ten List">
     <Sectionhead>
         <Fragment slot="heading">Top Ten List</Fragment>
         <Fragment slot="subheading">My Late Show with David Letterman's winning top ten list entry.</Fragment>
@@ -72,11 +72,11 @@ const topTenList = [
                 width="750"
                 height="500"
             />
-            <h2 class="text-5xl my-6 tracking-tight dark:text-gray-300">
+            <h2 class="text-5xl my-6 tracking-tight">
                 Top Ten Reasons New York City is Excited About the World Series
             </h2>
             <h3
-                class="text-2xl my-6 tracking-tight text-slate-600 dark:text-gray-400"
+                class="text-2xl my-6 tracking-tight text-slate-600"
             >
                 With the New York Yankees and the New York Mets in the World
                 Series, the Big Apple is abuzz with excitement. Here are the top
@@ -86,7 +86,7 @@ const topTenList = [
         <ol class="list-decimal space-y-2 ml-6 my-6" reversed>
             {
                 topTenList.map((item) => (
-                    <li class={item.author.includes("Brett") ? "text-gray-800 dark:text-gray-300" : "text-gray-500"}>
+                    <li class={item.author.includes("Brett") ? "text-gray-800" : "text-gray-500"}>
                         <span class="mr-4">{item.entry}</span>
                         <em>{item.author}, {item.location}</em>
                     </li>
@@ -99,4 +99,4 @@ const topTenList = [
             <time datetime="2000-10-19">October 19, 2000</time>, my entry was chosen for the #3 spot on this list, netting me bragging rights and a <em>Late Show with David Letterman</em> t-shirt.
         </p>
     </article>
-</MainLayout>
+</BaseLayout>

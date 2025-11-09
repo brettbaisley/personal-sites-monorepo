@@ -1,24 +1,12 @@
 ---
 title: ✨ Winning the 2024 Morgan Stanley GenAI Hackathon
 subtitle: People's Choice Award Winner
-pubDate: 2025-08-11
+publish_date: 2025-08-11
 description: How our AI-powered alert assistant won the People's Choice Award at the 2024 Morgan Stanley GenAI Hackathon - cutting recovery time, boosting reliability, and showing the power of Generative AI in action.
 author: brett-baisley
+images:
+  - ../../assets/images/2024-genai-hackathon-throphy.png
 ---
-
-import { Image } from 'astro:assets';
-import trophy from '../../assets/images/2024-genai-hackathon-throphy.png';
-
-<Image 
-    src={trophy}
-    alt="The 2024 Gen AI People's Choice Trophy" 
-    loading="lazy"
-    style={{
-        float: 'right',
-        margin: '0 0 1rem 1rem',
-        maxWidth: 'min(40%, 320px)',
-    }}
-/>
 
 I'm thrilled to share that my team and I won the **People's Choice Award** at the **2024 Morgan Stanley Generative AI Hackathon** — an incredible event that brought together some of the brightest minds across the firm to explore how AI can transform the way we work.
 
