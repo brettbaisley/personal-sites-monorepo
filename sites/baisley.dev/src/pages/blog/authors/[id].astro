@@ -1,5 +1,5 @@
 ---
-import MainLayout from '../../../layouts/MainLayout.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Sectionhead from '../../../components/Sectionhead.astro';
 
 import { getCollection, render } from 'astro:content';
@@ -15,7 +15,7 @@ export async function getStaticPaths() {
 const { author } = Astro.props;
 const { Content } = await render(author);
 ---
-<MainLayout title={`Brett Baisley | Blog | ${author.data.first_name} ${author.data.last_name}`}>
+<BaseLayout pageTitle={`Brett Baisley | Blog | ${author.data.first_name} ${author.data.last_name}`}>
   <Sectionhead>
     <Fragment slot="heading">{`${author.data.first_name} ${author.data.last_name}`}</Fragment>
     <Fragment slot="subheading">{`${author.data.role}`}</Fragment>
@@ -24,4 +24,4 @@ const { Content } = await render(author);
     <p class="mt-8 text-gray-500">{author.data.bio}</p>
   </div>
   <Content />
-</MainLayout>
+</BaseLayout>
