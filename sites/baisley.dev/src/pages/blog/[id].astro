@@ -1,7 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
-import BlogPost from '../../components/BlogPost.astro';
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import MarkdownPostLayout from '../../layouts/MarkdownPostLayout.astro';
+
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -22,12 +22,19 @@ if (typeof (post as any).body === 'string') {
   readingTime = Math.max(1, Math.ceil(words / 200));
 }
 
+console.log(`pubDate:`, pubDate);
 ---
-<BaseLayout pageTitle={`Brett Baisley | Blog | ${post.data.title}`}>
-    <div class="max-w-3xl mx-auto mt-6">
-      <a href="/blog/" class="text-sm text-blue-600 hover:underline">← Back to blog</a>
-    </div>
 
+<MarkdownPostLayout 
+pageTitle={`Brett Baisley | Blog | ${post.data.title}`} 
+title={post.data.title || ""}
+subtitle={post.data.subtitle || ""}
+publish_date={pubDate?.toISOString().slice(0, 10)}
+author={post.data.author}
+>
+
+  <article class="prose max-w-none">
     <Content />
+  </article>
 
-</BaseLayout>
+</MarkdownPostLayout>

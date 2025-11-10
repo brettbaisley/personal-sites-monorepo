@@ -6,8 +6,7 @@ const authorData = await getEntry("authors", post.data.author.id);
 ---
 
 <li>
-  {console.log(post)}
-  <a href={post.id}>
+  <a href={`/blog/${post.id}`}>
     {post.data.title}
   </a>
   <p>By: {authorData && authorData.data.first_name} {authorData && authorData.data.last_name}</p>

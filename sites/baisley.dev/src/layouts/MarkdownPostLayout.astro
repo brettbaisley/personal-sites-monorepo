@@ -1,11 +1,24 @@
 ---
+import { getEntry } from 'astro:content';
 import BaseLayout from './BaseLayout.astro';
- const { frontmatter } = Astro.props;
- ---
 
- <BaseLayout pageTitle={frontmatter.title}>
-    <h1>{frontmatter.title}</h1>
-    <p>Published on: {frontmatter.pubDate.toString().slice(0, 10)}</p>
-    <p>Written by: {frontmatter.author}</p>
-    <slot />
+const { title, subtitle, publish_date, author } = Astro.props;
+const authorData = await getEntry("authors", author.id);
+---
+
+ <BaseLayout pageTitle={title}>
+    <article class="max-w-2xl mx-auto">
+        <a href="/blog/" class="text-sm text-blue-600 hover:underline mb-4 inline-block">← Back to blog</a>
+
+        <h1 class="text-4xl font-extrabold tracking-tight">{title}</h1>
+        <h2 class="text-2xl font-bold tracking-tight">{subtitle}</h2>
+        <p>Published on: {publish_date}</p>
+        {
+            authorData ? 
+            <p>Written by: {`${authorData.data.first_name} ${authorData.data.last_name}`}</p> :  ''
+        }
+        
+        <slot />
+    </article>
+
 </BaseLayout>
