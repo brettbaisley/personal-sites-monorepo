@@ -7,7 +7,7 @@ const { prevUrl, nextUrl } = Astro.props;
 <nav aria-label="Blog Pages">
     {
         prevUrl && (
-            <Link href={prevUrl} class="text-black dark:text-white border-transparent link-with-left-arrow" style="primary">
+            <Link href={prevUrl} class="text-black border-transparent link-with-left-arrow" style="primary">
                 Previous
             </Link>
         )
@@ -17,7 +17,7 @@ const { prevUrl, nextUrl } = Astro.props;
 
 {
     nextUrl && (
-        <Link href={nextUrl} class="text-black dark:text-white border-transparent link-with-right-arrow" style="primary">
+    <Link href={nextUrl} class="text-black border-transparent link-with-right-arrow" style="primary">
             Next
         </Link>
     )

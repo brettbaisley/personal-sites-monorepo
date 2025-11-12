@@ -1,19 +1,19 @@
 ---
-import MainLayout from "../../../layouts/MainLayout.astro";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
 import Sectionhead from "../../../components/Sectionhead.astro";
 import Link from "../../../components/ui/Link.astro";
 
 import { getCollection } from "astro:content";
 const authors = await getCollection("authors");
 ---
-<MainLayout title="Brett Baisley | Blog | Authors">
+<BaseLayout pageTitle="Brett Baisley | Blog | Authors">
     <Sectionhead>
         <Fragment slot="heading">Authors</Fragment>
         <Fragment slot="subheading">Bio pages of all authors of Brett's Blog.</Fragment>
     </Sectionhead>
 
     {authors.length === 0 ? (
-        <p class="mt-6 text-sm text-gray-600 dark:text-gray-400">No authors found.</p>
+        <p class="mt-6 text-sm text-gray-600">No authors found.</p>
     ) : (
         // Sort authors by last name for predictable order
         <ul class="mt-8 space-y-6 max-w-3xl mx-auto">
@@ -46,17 +46,17 @@ const authors = await getCollection("authors");
                                 />
                             ) }
                             <div>
-                                <Link href={authorHref} class="text-lg font-medium text-gray-800 dark:text-gray-200">
+                                <Link href={authorHref} class="text-lg font-medium text-gray-800">
                                     {author.data.first_name}&nbsp;{author.data.last_name}
                                 </Link>
                                 {author.data.role && (
                                     <div class="text-sm text-gray-500">{author.data.role}</div>
                                 )}
-                                <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">{shortBio}</p>
+                                <p class="mt-1 text-sm text-gray-600">{shortBio}</p>
                             </div>
                         </li>
                     );
                 })}
         </ul>
     )}
-</MainLayout>
+</BaseLayout>

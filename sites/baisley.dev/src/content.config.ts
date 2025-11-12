@@ -7,7 +7,7 @@ const blog = defineCollection({
     schema: z.object({
       title: z.string().min(1),
       subtitle: z.string().optional(),
-      pubDate: z.preprocess((arg) => {
+      publish_date: z.preprocess((arg) => {
         if (typeof arg === 'string' || typeof arg === 'number') return new Date(arg);
         return arg;
       }, z.date()),
@@ -15,6 +15,15 @@ const blog = defineCollection({
       tags: z.array(z.string()).optional(),
       draft: z.boolean().optional().default(false),
       author: reference('authors'),
+      images: z.array(
+        z.object({
+          src: z.string().min(1),
+          alt: z.string().optional(),
+          caption: z.string().optional(),
+          width: z.number().int().optional(),
+          height: z.number().int().optional(),
+        })
+      ).optional().default([]),
     })
 });
 

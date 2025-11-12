@@ -1,7 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
-import BlogPost from '../../components/BlogPost.astro';
-import MainLayout from '../../layouts/MainLayout.astro';
+import MarkdownPostLayout from '../../layouts/MarkdownPostLayout.astro';
+
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -15,20 +15,43 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 
 // Publish date and reading time estimation
-const pubDate = post.data.pubDate ? new Date(post.data.pubDate) : null;
+const pubDate = post.data.publish_date ? new Date(post.data.publish_date) : null;
 let readingTime = null;
 if (typeof (post as any).body === 'string') {
   const words = (post as any).body.split(/\s+/).filter(Boolean).length;
   readingTime = Math.max(1, Math.ceil(words / 200));
 }
 
+console.log(`pubDate:`, pubDate);
 ---
-<MainLayout title={`Brett Baisley | Blog | ${post.data.title}`}>
-    <div class="max-w-3xl mx-auto mt-6">
-      <a href="/blog/" class="text-sm text-blue-600 hover:underline">← Back to blog</a>
-    </div>
-  <BlogPost frontmatter={post.data}>
-    {readingTime && <div>{readingTime} min read</div>}
+
+<div class="p-4">
+  <MarkdownPostLayout 
+  pageTitle={`Brett Baisley | Blog | ${post.data.title}`} 
+  title={post.data.title || ""}
+  subtitle={post.data.subtitle || ""}
+  publish_date={pubDate?.toISOString().slice(0, 10)}
+  author={post.data.author}
+  >
+    <article class="prose max-w-none">
+      
+      { post.data.images && post.data.images.length > 0 ? (
+        <figure class="float-right ml-4 mb-4 w-72">
+          <img 
+            src={post.data.images[0].src} 
+            alt={post.data.images[0].alt || ""} 
+            width={post.data.images[0].width || undefined} 
+            height={post.data.images[0].height || undefined} 
+            />
+          { post.data.images[0].caption ? (
+            <figcaption class="text-sm text-center text-gray-500 mt-2">
+              {post.data.images[0].caption}
+            </figcaption>
+          ) : null }
+        </figure>
+      ) : null
+    }
       <Content />
-  </BlogPost>
-</MainLayout>
+    </article>
+  </MarkdownPostLayout>
+</div>

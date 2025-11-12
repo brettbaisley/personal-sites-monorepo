@@ -1,13 +1,15 @@
 ---
-import MainLayout from "../layouts/MainLayout.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
 import Link from "../components/ui/Link.astro";
 ---
 
-<MainLayout title="Brett Baisley | Not Found">
-    <div class="text-center">
-        <h3 class="text-gray-800 dark:text-gray-200 mb-8">Error: Page Not Found</h3>
-        <h2 class="text-8xl text-black dark:text-white mb-8">404</h2>
-        <p class="text-gray-500 dark:text-gray-500 mb-8">Sorry, but we can't find the page you are looking for.</p>
-        <Link href="/" class="">Return to the home page</Link>
+<BaseLayout pageTitle="Brett Baisley | Not Found">
+    <div class="p-4">
+        <div class="text-center">
+            <h3 class="text-gray-800 mb-8">Error: Page Not Found</h3>
+            <h2 class="text-8xl text-black mb-8">404</h2>
+            <p class="text-gray-500 mb-8">Sorry, but we can't find the page you are looking for.</p>
+            <Link href="/" class="">Return to the home page</Link>
+        </div>
     </div>
-</MainLayout>
+</BaseLayout>

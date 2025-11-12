@@ -1,22 +1,14 @@
 ---
-import AuthorCard from '../components/AuthorCard.astro';
 import { getEntry } from "astro:content";
-const { frontmatter } = Astro.props;
-const authorData = await getEntry("authors", frontmatter.author.id);
+const { post } = Astro.props;
+const authorData = await getEntry("authors", post.data.author.id);
 
 ---
-  <article class="max-w-[85ch] mx-auto  text-gray-700 dark:text-gray-300 p-4">
-    <header class="border-b border-gray-200 dark:border-gray-700 pb-4">
-      <h1 class="text-5xl mb-4 tracking-tight font-extrabold text-black dark:text-white">{frontmatter.title}</h1>
-      <h2 class="text-xl text-gray-600 dark:text-gray-300">{frontmatter.subtitle}</h2>
-      <time class="text-xs text-gray-700 dark:text-gray-300" datetime={frontmatter.pubDate.toISOString()}>{frontmatter.pubDate.toLocaleDateString(undefined, {
-        dateStyle: "medium",
-        timeZone: "UTC"
-        })}</time>
-    </header>
-    <section class="prose lg:prose-xl dark:prose-invert mx-auto">
-      <slot />
-    </section>
 
-    <AuthorCard author={authorData}></AuthorCard>
-  </article>
+<li class="p-4 x-4 py-2">
+  <a href={`/blog/${post.id}`} class="text-xl">
+    {post.data.title}
+  </a>
+  <p>By: {authorData && authorData.data.first_name} {authorData && authorData.data.last_name}</p>
+  <p>Published on: {post.data.publish_date ? new Date(post.data.publish_date).toISOString().slice(0, 10) : ''}</p>
+</li>
