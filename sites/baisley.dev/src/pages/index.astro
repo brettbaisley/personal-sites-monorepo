@@ -42,7 +42,8 @@ const apps = [
 ]
 ---
 
-<BaseLayout pageTitle={pageTitle}>
+<BaseLayout pageTitle={pageTitle} >
+    <div class="p-4">
     <Sectionhead>
         <Fragment slot="heading">Welcome</Fragment>
         <Fragment slot="subheading">This is my personal page for exploration and innovation.</Fragment>
@@ -67,4 +68,5 @@ const apps = [
             ))
         }
     </ul>
+    </div>
 </BaseLayout>

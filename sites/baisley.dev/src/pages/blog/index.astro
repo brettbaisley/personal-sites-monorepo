@@ -9,14 +9,15 @@ const allPosts = await getCollection('blog');
 
 ---
 <BaseLayout pageTitle={`Brett Baisley | Blog | `}>
+  <div class="p-4">
     <h1 class="text-4xl font-bold">Recent Posts</h1>
     <ul>
       {
         allPosts.map(post => 
-          <BlogPost key={post.id} post={post} />
+        <BlogPost key={post.id} post={post} />
       )
-    
-      }
+      
+    }
     </ul>
-  
+  </div>
 </BaseLayout>

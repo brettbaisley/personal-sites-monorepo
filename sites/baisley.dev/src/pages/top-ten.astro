@@ -60,24 +60,26 @@ const topTenList = [
 ---
 
 <BaseLayout pageTitle="Brett Baisley | Top Ten List">
-    <Sectionhead>
-        <Fragment slot="heading">Top Ten List</Fragment>
-        <Fragment slot="subheading">My Late Show with David Letterman's winning top ten list entry.</Fragment>
-    </Sectionhead>
-    <article class="max-w-[85ch] mx-auto mt-8">
-        <header>
-            <Image
+    <div class="p-4">
+
+        <Sectionhead>
+            <Fragment slot="heading">Top Ten List</Fragment>
+            <Fragment slot="subheading">My Late Show with David Letterman's winning top ten list entry.</Fragment>
+        </Sectionhead>
+        <article class="max-w-[85ch] mx-auto mt-8">
+            <header>
+                <Image
                 src={LSLogo}
                 alt="Late Show with David Letterman marquee outside of the Ed Sullivan Theatre in New York City"
                 width="750"
                 height="500"
-            />
-            <h2 class="text-5xl my-6 tracking-tight">
-                Top Ten Reasons New York City is Excited About the World Series
-            </h2>
-            <h3
+                />
+                <h2 class="text-5xl my-6 tracking-tight">
+                    Top Ten Reasons New York City is Excited About the World Series
+                </h2>
+                <h3
                 class="text-2xl my-6 tracking-tight text-slate-600"
-            >
+                >
                 With the New York Yankees and the New York Mets in the World
                 Series, the Big Apple is abuzz with excitement. Here are the top
                 ten reasons New York City is excited about the World Series.
@@ -93,10 +95,11 @@ const topTenList = [
                 ))
             }
         </ol>
-
+        
         <p class="mt-12 text-gray-500">
             <em>The Late Show with David Letterman</em> website used to run a contest where people could submit their own "Top Ten" entries. On 
             <time datetime="2000-10-19">October 19, 2000</time>, my entry was chosen for the #3 spot on this list, netting me bragging rights and a <em>Late Show with David Letterman</em> t-shirt.
         </p>
     </article>
+</div>
 </BaseLayout>

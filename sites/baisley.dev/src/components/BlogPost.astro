@@ -5,8 +5,8 @@ const authorData = await getEntry("authors", post.data.author.id);
 
 ---
 
-<li>
-  <a href={`/blog/${post.id}`}>
+<li class="p-4 x-4 py-2">
+  <a href={`/blog/${post.id}`} class="text-xl">
     {post.data.title}
   </a>
   <p>By: {authorData && authorData.data.first_name} {authorData && authorData.data.last_name}</p>

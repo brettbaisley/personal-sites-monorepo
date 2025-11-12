@@ -25,33 +25,33 @@ if (typeof (post as any).body === 'string') {
 console.log(`pubDate:`, pubDate);
 ---
 
-<MarkdownPostLayout 
-pageTitle={`Brett Baisley | Blog | ${post.data.title}`} 
-title={post.data.title || ""}
-subtitle={post.data.subtitle || ""}
-publish_date={pubDate?.toISOString().slice(0, 10)}
-author={post.data.author}
->
-
-  <article class="prose max-w-none">
-   
-    { post.data.images && post.data.images.length > 0 ? (
-      <figure class="float-right ml-4 mb-4 w-72">
-        <img 
-          src={post.data.images[0].src} 
-          alt={post.data.images[0].alt || ""} 
-          width={post.data.images[0].width || undefined} 
-          height={post.data.images[0].height || undefined} 
-        />
-        { post.data.images[0].caption ? (
-          <figcaption class="text-sm text-center text-gray-500 mt-2">
-            {post.data.images[0].caption}
-          </figcaption>
-        ) : null }
-      </figure>
-    ) : null
+<div class="p-4">
+  <MarkdownPostLayout 
+  pageTitle={`Brett Baisley | Blog | ${post.data.title}`} 
+  title={post.data.title || ""}
+  subtitle={post.data.subtitle || ""}
+  publish_date={pubDate?.toISOString().slice(0, 10)}
+  author={post.data.author}
+  >
+    <article class="prose max-w-none">
+      
+      { post.data.images && post.data.images.length > 0 ? (
+        <figure class="float-right ml-4 mb-4 w-72">
+          <img 
+            src={post.data.images[0].src} 
+            alt={post.data.images[0].alt || ""} 
+            width={post.data.images[0].width || undefined} 
+            height={post.data.images[0].height || undefined} 
+            />
+          { post.data.images[0].caption ? (
+            <figcaption class="text-sm text-center text-gray-500 mt-2">
+              {post.data.images[0].caption}
+            </figcaption>
+          ) : null }
+        </figure>
+      ) : null
     }
-    <Content />
-  </article>
-
-</MarkdownPostLayout>
+      <Content />
+    </article>
+  </MarkdownPostLayout>
+</div>
