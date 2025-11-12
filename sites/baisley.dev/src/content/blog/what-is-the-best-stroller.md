@@ -4,6 +4,11 @@ subtitle: 'What we know now that we wished we knew then.'
 publish_date: 2023-07-02
 description: 'This is my unofficial review of what I believe is the best stroller, or at least type of stroller, to buy.'
 author: 'brett-baisley'
+images:
+  - src: ../images/bob_flex_duallie.png
+    alt: "BOB Revolution Flex Duallie stroller"
+    caption: "Our pick for the best stroller: BOB Revolution Flex Duallie"
+    featured: true
 ---
 
 I am not an official product reviewer. I don't work for a stroller company. I am just a regular dad of two boys who over the years have owned and used multiple different strollers. I want to share my personal recommendation on which stroller I think is the best, and I hope anyone who is on the fence on which stroller to buy finds this helpful.
